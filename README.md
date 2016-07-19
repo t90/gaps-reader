@@ -10,6 +10,7 @@ For example we have dates
 There will be two gaps 
 
 2/1/2000 12:00:00 AM *to* 3/1/2000 12:00:00 AM
+
 5/20/2000 12:00:00 AM *to* 10/1/2000 12:00:00 AM
 
 for the following date intervals
