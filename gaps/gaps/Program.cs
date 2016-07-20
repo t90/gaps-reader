@@ -7,47 +7,49 @@ namespace gaps
 {
     class Program
     {
+
+        public static List<DateInterval> CreateUpTo50RandomDateIntervals()
+        {
+            var random = new Random(DateTime.Now.Millisecond);
+
+            var numberOfDateIntervals = random.Next(0, 50);
+            var dateIntervals = new List<DateInterval>(numberOfDateIntervals);
+
+            while (numberOfDateIntervals-- > 0)
+            {
+                var startDate = new DateTime(random.Next(1930, 2016), random.Next(1, 12), random.Next(1, 28));
+                dateIntervals.Add(new DateInterval()
+                {
+                    StartDate = startDate,
+                    EndDate = startDate.AddDays(random.Next(0, 1000))
+                });
+            }
+
+            return dateIntervals;
+
+        }
+
+
         static void Main(string[] args)
         {
-            var gapsReader = new GapsReader(
-            new []
+
+            var random = new Random(DateTime.Now.Millisecond);
+
+            int numberOfDataSamples;
+
+            if (args.Length != 1 || !int.TryParse(args[0], out numberOfDataSamples))
             {
-                new DateInterval()
-                {
-                    StartDate = DateTime.Parse("1/1/2000"),
-                    EndDate = DateTime.Parse("2/1/2000"),
-                },
-                new DateInterval()
-                {
-                    StartDate = DateTime.Parse("3/1/2000"),
-                    EndDate = DateTime.Parse("4/1/2000"),
-                },
-                new DateInterval()
-                {
-                    StartDate = DateTime.Parse("3/1/2000"),
-                    EndDate = DateTime.Parse("5/1/2000"),
-                },
-                new DateInterval()
-                {
-                    StartDate = DateTime.Parse("4/1/2000"),
-                    EndDate = DateTime.Parse("4/20/2000"),
-                },
-                new DateInterval()
-                {
-                    StartDate = DateTime.Parse("4/20/2000"),
-                    EndDate = DateTime.Parse("5/20/2000"),
-                },
-                new DateInterval()
-                {
-                    StartDate = DateTime.Parse("10/1/2000"),
-                    EndDate = DateTime.Parse("12/1/2000"),
-                },
+                numberOfDataSamples = 1000;
             }
-            );
 
+            List<List<DateInterval>> dataSamples = new List<List<DateInterval>>(numberOfDataSamples);
 
-            gapsReader.Read().ToList().ForEach(i =>
-                    Console.WriteLine($"{i.StartDate}:{i.EndDate}"));
+            while (numberOfDataSamples-- > 0)
+            {
+                dataSamples.Add(CreateUpTo50RandomDateIntervals());
+            }
+
+//            _result = (new GapsReader(dateIntervals)).Read();
 
         }
     }
